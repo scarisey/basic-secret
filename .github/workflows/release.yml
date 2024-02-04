@@ -1,5 +1,6 @@
 name: Release
 on:
+  workflow_dispatch:
   push:
     tags:
     - "**"
@@ -7,10 +8,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - uses: olafurpg/setup-scala@v14
-      with:
-        java-version: openjdk@1.17
+    - uses: actions/checkout@v2
+    - uses: coursier/cache-action@v6
+    - uses: VirtusLab/scala-cli-setup@main
     - name: Create executable
       run: scala-cli --power package .
     - name: Create release
